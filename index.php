@@ -4,23 +4,25 @@ require './model/todo.php';
 
 $todos = [];
 
-$todo = new Todo();
-$todo->set([
-  'id' => 1,
-  'title' => 'りんごを買う',
-  'contents' => 'スーパーで買う',
-  'created' => '2019-01-14 10:00'
-]);
-$todos[] = $todo;
+try {
+    $user = 'dbuser';
+    $pass = 'password';
+    $dbh = new PDO('mysql:host=localhost;dbname=todo_db', $user, $pass);
+    $rows = $dbh->query('SELECT id, title, contents, created, modified from todos');
 
-$todo = new Todo();
-$todo->set([
-  'id' => 2,
-  'title' => 'ジムに行く',
-  'contents' => '',
-  'created' => '2019-01-14 11:00'
-]);
-$todos[] = $todo;
+    foreach($rows as $row) {
+        //var_dump($row);exit;
+        $todo = new Todo();
+        $todo->id = $row['id'];
+        $todo->title = $row['title'];
+        $todo->created = $row['created'];
+        $todos[] = $todo;
+    }
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "エラー!: " . $e->getMessage() . "<br/>";
+    exit();
+}
 
 ?>
 <!doctype html>
