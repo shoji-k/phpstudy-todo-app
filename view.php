@@ -1,5 +1,5 @@
 <?php
-require '../setting.php';
+require './setting.php';
 require './model/todo.php';
 
 try {
