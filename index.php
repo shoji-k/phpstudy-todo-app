@@ -5,7 +5,21 @@ require './model/todo.php';
 $todos = [];
 
 $todo = new Todo();
+$todo->set([
+  'id' => 1,
+  'title' => 'りんごを買う',
+  'contents' => 'スーパーで買う',
+  'created' => '2019-01-14 10:00'
+]);
 $todos[] = $todo;
+
+$todo = new Todo();
+$todo->set([
+  'id' => 2,
+  'title' => 'ジムに行く',
+  'contents' => '',
+  'created' => '2019-01-14 11:00'
+]);
 $todos[] = $todo;
 
 ?>
@@ -31,11 +45,11 @@ $todos[] = $todo;
         </tr>
         <?php foreach ($todos as $one): ?>
         <tr>
-          <td>sample title</td>
-          <td>2001/01/01 10:00:00</td>
+          <td><?= $one->title; ?></td>
+          <td><?= $one->created; ?></td>
           <td>
-            <a href="/edit.php?id=999">編集</a>
-            <a href="/view.php?id=999">表示</a>
+            <a href="/edit.php?id=<?= $one->id; ?>">編集</a>
+            <a href="/view.php?id=<?= $one->id; ?>">表示</a>
           </td>
         </tr>
         <?php endforeach; ?>
